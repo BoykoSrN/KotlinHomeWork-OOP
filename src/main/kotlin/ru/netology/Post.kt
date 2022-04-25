@@ -26,5 +26,17 @@ data class Post (
     val markedAsAds: Boolean,
     val isFavorite: Boolean,
     val donut: Boolean,
-    val postponedId: Int
+    val postponedId: Int,
+    val audio: Post?,
+    val document: Post?,
+    val link: Post?,
+    val note: Post?,
+    val page: Post?,
+    val photo: Post?,
+    val poll: Post?,
+    val post: Post?,
+    val postSource: Post?,
+    val sticker: Post?,
+    val video: Post?,
+    val wall: Post?
 )
