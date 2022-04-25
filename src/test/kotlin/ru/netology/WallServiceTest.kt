@@ -20,7 +20,7 @@ class WallServiceTest {
             0,
             true,
             true,
-            0,
+            null,
             0, 0,
             0,
             "post",
@@ -33,18 +33,7 @@ class WallServiceTest {
             false,
             false,
             0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            null
         ))
 
         assertNotEquals(0, result.id)
@@ -64,7 +53,7 @@ class WallServiceTest {
             0,
             true,
             true,
-            0,
+            null,
             0,
             0,
             0,
@@ -78,18 +67,8 @@ class WallServiceTest {
             false,
             false,
             0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,))
+            null
+        ))
 
         val update = Post(1,
             0,
@@ -101,7 +80,7 @@ class WallServiceTest {
             0,
             true,
             true,
-            0,
+            null,
             0,
             0,
             0,
@@ -115,18 +94,7 @@ class WallServiceTest {
             false,
             false,
             0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
+            null
         )
 
         val result = service.update(update)
@@ -148,7 +116,7 @@ class WallServiceTest {
             0,
             true,
             true,
-            0,
+            null,
             0,
             0,
             0,
@@ -162,30 +130,21 @@ class WallServiceTest {
             false,
             false,
             0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,))
+            null
+        ))
 
-        val update = service.add(Post(3,
+        val update = Post(
+            3,
             0,
             0,
             0,
             LocalDate.now(),
-            "Привет",
+            "Пока",
             0,
             0,
             true,
             true,
-            0,
+            null,
             0,
             0,
             0,
@@ -199,22 +158,11 @@ class WallServiceTest {
             false,
             false,
             0,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,))
+            null
+        )
 
         val result = service.update(update)
 
         assertFalse(result)
     }
-
 }

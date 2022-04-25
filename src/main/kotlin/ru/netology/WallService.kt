@@ -3,7 +3,6 @@ package ru.netology
 class WallService {
     private var posts = emptyArray<Post>()
     private var postId = 1
-    private var attachments = emptyArray<Attachment>()
 
     fun add(post: Post): Post {
         val newPost = post.copy(id = post.id + postId)
