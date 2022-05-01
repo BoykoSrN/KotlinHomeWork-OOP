@@ -2,6 +2,7 @@ package ru.netology
 
 class WallService {
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
     private var postId = 1
 
     fun add(post: Post): Post {
@@ -28,5 +29,15 @@ class WallService {
         }
         return false
     }
+
+    fun createComment(comment: Comment) {
+        for (post in posts) {
+            if (post.id != comment.postId)
+                throw PostNotFoundException("No post with id ${comment.postId}")
+        }
+        comments += comment
+    }
+
+    class PostNotFoundException(message: String) : RuntimeException(message)
 
 }
