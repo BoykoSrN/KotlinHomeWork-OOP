@@ -28,5 +28,5 @@ data class Post (
     val isFavorite: Boolean,
     val donut: Boolean,
     val postponedId: Int,
-    val attachments: MutableList<Attachment>
+    val attachments: MutableList<Attachment>?
 )
