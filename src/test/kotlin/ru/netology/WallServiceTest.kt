@@ -10,10 +10,32 @@ class WallServiceTest {
     @Test
     fun addPost() {
         val service = WallService()
-        val result = service.add(Post(0, 0, 0, 0, LocalDate.now(), "_",
-            0, 0, true, true, 0, 0, 0, 0,
-            "post", 0, true, true, true, false, false,
-            false, false, 0))
+        val result = service.add(Post(
+            0,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "_",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0, 0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        ))
 
         assertNotEquals(0, result.id)
     }
@@ -22,14 +44,61 @@ class WallServiceTest {
     fun updateExistingTrue() {
         val service = WallService()
 
-        service.add(Post(0, 0, 0, 0, LocalDate.now(), "Привет", 0, 0,
-            true, true, 0, 0, 0, 0, "post", 0, true,
-            true, true, false, false, false, false, 0))
+        service.add(Post(
+            0,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "Привет",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0,
+            0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        ))
 
-        val update = Post(1, 0, 0, 0, LocalDate.now(), "Пока", 0,
-            0, true, true, 0, 0, 0, 0, "post", 0,
-            true, true, true, false, false, false, false,
-            0)
+        val update = Post(
+            1,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "Пока",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0,
+            0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        )
 
         val result = service.update(update)
 
@@ -40,20 +109,158 @@ class WallServiceTest {
     fun updateExistingFalse() {
         val service = WallService()
 
-        service.add(Post(0, 0, 0, 0, LocalDate.now(), "Привет", 0, 0,
-            true, true, 0, 0, 0, 0, "post", 0, true,
-            true, true, false, false, false, false, 0))
+        service.add(Post(
+            0,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "Привет",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0,
+            0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        ))
 
-        val update = Post(3, 0, 0, 0, LocalDate.now(), "Пока", 0,
-            0, true, true, 0, 0, 0, 0, "post", 0,
-            true, true, true, false, false, false, false,
-            0)
+        val update = Post(
+            3,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "Пока",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0,
+            0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        )
 
         val result = service.update(update)
 
         assertFalse(result)
     }
 
+    @Test(expected = WallService.PostNotFoundException::class)
+    fun shouldThrow() {
+        val service = WallService()
 
+        service.add(Post(
+            0,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "Привет",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0,
+            0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        ))
 
+        service.createComment(Comment(
+            1,
+            1,
+            2,
+            LocalDate.now(),
+            "Привет",
+            false,
+            null,
+            null,
+            null,
+            null
+        ))
+    }
+
+    @Test
+    fun successfulExecutionCreateComment() {
+        val service = WallService()
+
+        service.add(Post(
+            0,
+            0,
+            0,
+            0,
+            LocalDate.now(),
+            "Привет",
+            0,
+            0,
+            true,
+            true,
+            null,
+            0,
+            0,
+            0,
+            "post",
+            0,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            0,
+            null
+        ))
+
+        val result = service.createComment(Comment(
+            1,
+            1,
+            1,
+            LocalDate.now(),
+            "Привет",
+            false,
+            null,
+            null,
+            null,
+            null
+        ))
+
+        assertEquals(Unit, result)
+    }
 }
