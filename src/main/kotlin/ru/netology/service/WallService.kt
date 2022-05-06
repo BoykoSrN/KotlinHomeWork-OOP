@@ -1,14 +1,18 @@
-package ru.netology
+package ru.netology.service
 
-class WallService {
-    private var posts = emptyArray<Post>()
-    private var comments = emptyArray<Comment>()
-    private var postId = 1
+import ru.netology.data.Comment
+import ru.netology.data.Post
+
+
+object WallService {
+    private var posts = mutableListOf<Post>()
+    private var comments = mutableListOf<Comment>()
+    private var postId = 0
 
     fun add(post: Post): Post {
-        val newPost = post.copy(id = post.id + postId)
-        posts += newPost
         postId++
+        val newPost = post.copy(id = postId.toLong())
+        posts.add(newPost)
         return posts.last()
     }
 
@@ -32,12 +36,20 @@ class WallService {
 
     fun createComment(comment: Comment) {
         for (post in posts) {
-            if (post.id != comment.postId)
-                throw PostNotFoundException("No post with id ${comment.postId}")
+            if (post.id == comment.postId) {
+                comments.add(comment)
+                return
+            }
         }
-        comments += comment
+        throw PostNotFoundException("No post with id ${comment.postId}")
     }
 
-    class PostNotFoundException(message: String) : RuntimeException(message)
+    class PostNotFoundException(message: String): RuntimeException(message)
+
+    fun clear() {
+        postId = 0
+        posts.clear()
+        comments.clear()
+    }
 
 }
