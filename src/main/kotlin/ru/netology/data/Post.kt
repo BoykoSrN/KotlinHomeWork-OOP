@@ -1,6 +1,5 @@
 package ru.netology
 
-import ru.netology.attachment.Attachment
 import java.time.LocalDate
 
 data class Post (
@@ -28,5 +27,5 @@ data class Post (
     val isFavorite: Boolean,
     val donut: Boolean,
     val postponedId: Int,
-    val attachments: MutableList<Attachment>?
+    val attachments: ArrayList<Attachment>?
 )
