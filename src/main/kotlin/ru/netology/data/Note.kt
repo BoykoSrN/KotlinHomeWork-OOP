@@ -1,7 +1,8 @@
 package ru.netology.data
 
 data class Note(
-    val id: Long,
-    val ownerId: Long,
-    val text: String
+    val id: Int,
+    val ownerId: Int,
+    val text: String,
+    val visible: Boolean
 )

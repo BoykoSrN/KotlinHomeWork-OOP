@@ -4,7 +4,7 @@ import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import ru.netology.data.Comment
+import ru.netology.data.CommentPost
 import ru.netology.data.Post
 import java.time.LocalDate
 
@@ -219,7 +219,7 @@ class WallServiceTest {
         )
 
         WallService.createComment(
-            Comment(
+            CommentPost(
                 1,
                 1,
                 2,
@@ -268,7 +268,7 @@ class WallServiceTest {
         )
 
         val result = WallService.createComment(
-            Comment(
+            CommentPost(
                 1,
                 1,
                 1,

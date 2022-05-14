@@ -1,12 +1,12 @@
 package ru.netology.service
 
-import ru.netology.data.Comment
+import ru.netology.data.CommentPost
 import ru.netology.data.Post
 
 
 object WallService {
     private var posts = mutableListOf<Post>()
-    private var comments = mutableListOf<Comment>()
+    private var comments = mutableListOf<CommentPost>()
     private var postId = 0
 
     fun add(post: Post): Post {
@@ -17,7 +17,7 @@ object WallService {
     }
 
     fun update(post: Post): Boolean {
-        for ((index,postUpdate) in posts.withIndex()) {
+        for ((index, postUpdate) in posts.withIndex()) {
             if (postUpdate.id == post.id) {
                 posts[index] = post.copy(
                     ownerId = post.ownerId + 1,
@@ -34,7 +34,7 @@ object WallService {
         return false
     }
 
-    fun createComment(comment: Comment) {
+    fun createComment(comment: CommentPost) {
         for (post in posts) {
             if (post.id == comment.postId) {
                 comments.add(comment)
