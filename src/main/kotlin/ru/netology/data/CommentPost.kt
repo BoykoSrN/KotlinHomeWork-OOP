@@ -1,8 +1,9 @@
-package ru.netology
+package ru.netology.data
 
+import ru.netology.Attachment
 import java.time.LocalDate
 
-data class Comment(
+data class CommentPost(
     val id: Long,
     val fromId: Long,
     val postId: Long,
