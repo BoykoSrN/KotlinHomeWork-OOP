@@ -1,6 +1,6 @@
 package ru.netology.data
 
-import ru.netology.Attachment
+import ru.netology.attachment.Attachment
 import java.time.LocalDate
 
 data class CommentPost(
