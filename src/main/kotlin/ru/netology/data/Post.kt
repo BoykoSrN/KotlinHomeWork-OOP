@@ -1,5 +1,6 @@
-package ru.netology
+package ru.netology.data
 
+import ru.netology.Attachment
 import java.time.LocalDate
 
 data class Post (
