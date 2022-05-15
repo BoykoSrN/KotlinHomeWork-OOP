@@ -29,21 +29,21 @@ class NoteServiceTest {
             true
         )
 
-        val actualId = NoteService.addNote(note)
+        val actualId = NoteService.add(note)
 
         assertEquals(expectedId, actualId)
     }
 
     @Test
     fun updateNote() {
-        NoteService.addNote(Note(
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        val result = NoteService.updateNote(Note(
+        val result = NoteService.update(Note(
             1,
             0,
             "+",
@@ -53,16 +53,16 @@ class NoteServiceTest {
         assertTrue(result)
     }
 
-    @Test(expected = NoteService.NoteNotFoundException::class)
+    @Test(expected = NoteNotFoundException::class)
     fun throwIdUpdateNote() {
-        NoteService.addNote(Note(
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        NoteService.updateNote(Note(
+        NoteService.update(Note(
             2,
             0,
             "+",
@@ -70,16 +70,16 @@ class NoteServiceTest {
         ))
     }
 
-    @Test(expected = NoteService.NoteNotFoundException::class)
+    @Test(expected = NoteNotFoundException::class)
     fun throwVisibleUpdateNote() {
-        NoteService.addNote(Note(
+        NoteService.add(Note(
             0,
             0,
             "_",
             false
         ))
 
-        NoteService.updateNote(Note(
+        NoteService.update(Note(
             1,
             0,
             "+",
@@ -89,14 +89,14 @@ class NoteServiceTest {
 
     @Test
     fun deleteNote() {
-        NoteService.addNote(Note(
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        NoteService.addComment(CommentNote(
+        CommentNoteService.add(CommentNote(
             1,
             1,
             1,
@@ -104,7 +104,7 @@ class NoteServiceTest {
             "___"
         ))
 
-        val result = NoteService.deleteNote(Note(
+        val result = NoteService.delete(Note(
             1,
             0,
             "_",
@@ -115,24 +115,24 @@ class NoteServiceTest {
     }
 
 
-    @Test(expected = NoteService.NoteNotFoundException::class)
+    @Test(expected = NoteNotFoundException::class)
     fun throwVisibleDeleteNote() {
-        NoteService.addNote(Note(
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        NoteService.addComment(CommentNote(
-            1,
+        CommentNoteService.add(CommentNote(
+            0,
             1,
             1,
             true,
             "___"
         ))
 
-        NoteService.deleteNote(Note(
+        NoteService.delete(Note(
             1,
             0,
             "+",
@@ -140,16 +140,16 @@ class NoteServiceTest {
         ))
     }
 
-    @Test(expected = NoteService.NoteNotFoundException::class)
+    @Test(expected = NoteNotFoundException::class)
     fun throwIdDeleteNote() {
-        NoteService.addNote(Note(
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        NoteService.addComment(CommentNote(
+        CommentNoteService.add(CommentNote(
             1,
             1,
             1,
@@ -157,7 +157,7 @@ class NoteServiceTest {
             "___"
         ))
 
-        NoteService.deleteNote(Note(
+        NoteService.delete(Note(
             2,
             0,
             "+",
@@ -172,18 +172,18 @@ class NoteServiceTest {
         val newNote = Note(0,ownerId,"___", true)
         val notes = arrayOf(note)
 
-        NoteService.addNote(newNote)
+        NoteService.add(newNote)
 
-        assertArrayEquals(NoteService.getUserNotes(ownerId),notes)
+        assertArrayEquals(NoteService.getUser(ownerId),notes)
     }
 
-    @Test(expected = NoteService.NoteNotFoundException::class)
+    @Test(expected = NoteNotFoundException::class)
     fun throwIdGetUserNotes() {
         val ownerId = 12
         val newNote = Note(0,13,"___", true)
 
-        NoteService.addNote(newNote)
-        NoteService.getUserNotes(ownerId)
+        NoteService.add(newNote)
+        NoteService.getUser(ownerId)
     }
 
     @Test
@@ -191,339 +191,73 @@ class NoteServiceTest {
         val id = 1
         val note = Note(id,1,"___", true)
         val newNote = Note(0,1,"___", true)
-        NoteService.addNote(newNote)
+        NoteService.add(newNote)
         assertEquals(NoteService.getById(id), note)
     }
 
-    @Test(expected = NoteService.NoteNotFoundException::class)
+    @Test(expected = NoteNotFoundException::class)
     fun throwGetById() {
         val id = 1
         val newNote = Note(1,1,"___", true)
-        NoteService.addNote(newNote)
+        NoteService.add(newNote)
         NoteService.getById(id)
     }
 
     @Test
-    fun addComment() {
-        NoteService.addNote(Note(
+    fun restoreNoteTrue() {
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        val result = NoteService.addComment(CommentNote(
-            1,
+        CommentNoteService.add(CommentNote(
+            0,
             1,
             1,
             true,
             "___"
         ))
 
-        assertTrue(result)
-    }
-
-    @Test(expected = NoteService.NoteNotFoundException::class)
-    fun throwIdAddComment() {
-        NoteService.addNote(Note(
+        NoteService.delete(Note(
+            1,
             0,
-            0,
-            "_",
+            "+",
             true
         ))
 
-        NoteService.addComment(CommentNote(
-            1,
-            2,
-            1,
-            true,
-            "___"
-        ))
-    }
-
-    @Test(expected = NoteService.NoteNotFoundException::class)
-    fun throwVisibleAddComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            false
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-    }
-
-
-    @Test
-    fun updateComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        val result = NoteService.updateComment(
-            CommentNote(
-                1,
-                1,
-                1,
-                true,
-                "___+++"
-        ))
-
-        assertTrue(result)
-    }
-
-    @Test(expected = NoteService.CommentNotFoundException::class)
-    fun throwIdUpdateComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        NoteService.updateComment(CommentNote(
-            2,
-            1,
-            1,
-            true,
-            "___+++"
-        ))
-    }
-
-    @Test(expected = NoteService.CommentNotFoundException::class)
-    fun throwVisibleUpdateComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            false,
-            "___"
-        ))
-
-        NoteService.updateComment(CommentNote(
-            2,
-            1,
-            1,
-            true,
-            "___+++"
-        ))
-    }
-
-    @Test
-    fun deleteComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        val result = NoteService.deleteComment(
-            CommentNote(
-                1,
-                1,
-                1,
-                true,
-                "___"
-        ))
-
-        assertTrue(result)
-    }
-
-    @Test(expected = NoteService.CommentNotFoundException::class)
-    fun throwAlreadyDeletedComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        NoteService.deleteComment(
-            CommentNote(
-                1,
-                1,
-                1,
-                false,
-                "___"
-            ))
-
-    }
-
-    @Test(expected = NoteService.CommentNotFoundException::class)
-    fun throwVisibleDeleteComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            false,
-            "___"
-        ))
-
-        NoteService.deleteComment(
-            CommentNote(
-                1,
-                1,
-                1,
-                true,
-                "___"
-            ))
-
-    }
-
-    @Test(expected = NoteService.CommentNotFoundException::class)
-    fun throwIdDeleteComment() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        NoteService.deleteComment(
-            CommentNote(
-                2,
-                1,
-                1,
-                true,
-                "___"
-            ))
-
-    }
-
-    @Test
-    fun restoreCommentTrue() {
-        NoteService.addNote(Note(
-            0,
-            0,
-            "_",
-            true
-        ))
-
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        NoteService.deleteComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        val result = NoteService.restoreComment(CommentNote(
-            1,
-            1,
-            1,
-            false,
-            "___"
-        ))
-
+        val result = NoteService.restore(1)
         assertTrue(result)
     }
 
     @Test
-    fun restoreCommentFalse() {
-        NoteService.addNote(Note(
+    fun restoreNoteFalse() {
+        NoteService.add(Note(
             0,
             0,
             "_",
             true
         ))
 
-        NoteService.addComment(CommentNote(
-            1,
-            1,
-            1,
-            true,
-            "___"
-        ))
-
-        NoteService.deleteComment(CommentNote(
-            1,
+        CommentNoteService.add(CommentNote(
+            0,
             1,
             1,
             true,
             "___"
         ))
 
-        val result = NoteService.restoreComment(CommentNote(
-            2,
+        NoteService.delete(Note(
             1,
-            1,
-            false,
-            "___"
+            0,
+            "+",
+            true
         ))
 
+        val result = NoteService.restore(2)
         assertFalse(result)
     }
+
 
 }
